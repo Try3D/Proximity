@@ -1,0 +1,128 @@
+@font-face {
+    font-family: "Itim";
+    src: url("../fonts/Itim-Regular.ttf");
+}
+
+.sketch-background {
+    font-family: 'Itim';
+    background-color: #FDF7F1;
+}
+
+.sketch-border {
+    color: #3c3c3c;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 10px 10px 10px 10px;
+}
+
+.sketch-border-button {
+    cursor: pointer;
+    font-family: 'Itim';
+    margin: 5px;
+    font-size: 1em;
+    text-align: center;
+    border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+    background-color: #FFFFFF;
+    background-clip: padding-box;
+}
+
+.sketch-border-textbox {
+    background-color: #FFFFFF;
+    background-clip: padding-box;
+    width: 100%;
+    font-family: 'Itim';
+    box-sizing: border-box;
+    border-style: solid;
+    border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+    outline: none;
+    overflow: hidden;
+    resize: none;
+}
+
+.sketch-border-textarea {
+    background-color: #FFFFFF;
+    background-clip: padding-box;
+    width: 100%;
+    font-family: 'Itim';
+    box-sizing: border-box;
+    border-style: solid;
+    outline: none;
+    overflow: hidden;
+    resize: none;
+    border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
+}
+
+.sketch-post {
+    padding: 3px;
+    margin: 3px;
+}
+
+.sketch-border-posts-public {
+    background-clip: padding-box;
+    background-color: #6CACE4;
+    margin-top: 10px;
+    border-image: url(../icons/posts-public.svg) 10 10 10 10 stretch stretch;
+}
+
+.sketch-border-posts-user {
+    background-clip: padding-box;
+    background-color: #26C485;
+    margin-top: 10px;
+    border-image: url(../icons/posts-user.svg) 10 10 10 10 stretch stretch;
+}
+
+.sketch-anchor {
+    text-align: center;
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.align-right {
+    float: right;
+}
+
+.align-center {
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (min-width: 700px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .item1 {
+        flex-basis: 40%;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .item2 {
+        flex-basis: 60%;
+        margin: 5px;
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 699px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .item1 {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .item2 {
+        margin: 5px;
+        padding: 5px;
+    }
+}
