@@ -29,18 +29,18 @@ def create_post():
     longitude = float(request.args["longitude"])
 
     cur = con.cursor()
-    posts = cur.execute('SELECT COUNT(*) as count FROM posts')
+    posts = cur.execute("SELECT COUNT(*) as count FROM posts")
     for post in posts:
-        count = post['count']
+        count = post["count"]
 
     if count:
-        p = cur.execute('SELECT * FROM posts')
+        p = cur.execute("SELECT * FROM posts")
         for b in p:
-            id = int(b['id']) + 1
+            id = int(b["id"]) + 1
     else:
         id = 1
 
-    cur.execute('INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)', [
+    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [
                 id, title, content, latitude, longitude])
     con.commit()
     return [id]
@@ -49,25 +49,25 @@ def create_post():
 @app.route("/getPosts")
 def get_posts():
     cur = con.cursor()
-    latitude = float(request.args['latitude'])
-    longitude = float(request.args['longitude'])
+    latitude = float(request.args["latitude"])
+    longitude = float(request.args["longitude"])
     try:
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
     except sqlite3.OperationalError:
         cur.execute("CREATE TABLE posts(id INT, title TEXT, content TEXT, latitude REAL, longitude REAL)")
-        posts = cur.execute('SELECT * FROM posts ORDER BY id DESC')
+        posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
 
     a = []
     for post in posts:
-        if haversine_distance(float(post['latitude']), float(post['longitude']), latitude, longitude) < 1:
+        if haversine_distance(float(post["latitude"]), float(post["longitude"]), latitude, longitude) < 1:
             a.append(post)
     return a
 
 
-@app.route("/getPosts/<path:path>")
-def get_post_by_id(path):
+@app.route("/getPosts/<id>")
+def get_post_by_id(id):
     cur = con.cursor()
-    posts = cur.execute("SELECT * FROM posts WHERE id IS ?", [path])
+    posts = cur.execute("SELECT * FROM posts WHERE id IS ?", [id])
 
     a = []
     for post in posts:
@@ -75,11 +75,11 @@ def get_post_by_id(path):
     return a
 
 
-@app.route("/updatePost/<path:path>")
-def update_post(path):
+@app.route("/updatePost/<id>")
+def update_post(id):
     content = request.args["content"]
     cur = con.cursor()
-    cur.execute("UPDATE posts SET content=? WHERE id is ?", [content, path])
+    cur.execute("UPDATE posts SET content=? WHERE id is ?", [content, id])
 
     posts = cur.execute("SELECT * FROM posts")
     a = []
@@ -88,10 +88,10 @@ def update_post(path):
     return a
 
 
-@app.route("/deletePost/<path:path>")
-def delete_post(path):
+@app.route("/deletePost/<id>")
+def delete_post(id):
     cur = con.cursor()
-    cur.execute("DELETE FROM posts WHERE id IS ?", [path])
+    cur.execute("DELETE FROM posts WHERE id IS ?", [id])
     posts = cur.execute("SELECT * FROM posts")
 
     a = []

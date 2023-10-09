@@ -4,7 +4,7 @@
 }
 
 .sketch-background {
-    font-family: 'Itim';
+    font-family: "Itim";
     background-color: #FDF7F1;
 }
 
@@ -15,10 +15,26 @@
     border-width: 10px 10px 10px 10px;
 }
 
-.sketch-border-button {
+.sketch-border-title {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-weight: bold;
     cursor: pointer;
-    font-family: 'Itim';
-    margin: 5px;
+    font-family: "Itim";
+    font-size: 2em;
+    text-align: center;
+    border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+    background-color: #FFFFFF;
+    background-clip: padding-box;
+}
+
+.sketch-border-button {
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Itim";
+    margin-top: 5px;
     font-size: 1em;
     text-align: center;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
@@ -30,7 +46,7 @@
     background-color: #FFFFFF;
     background-clip: padding-box;
     width: 100%;
-    font-family: 'Itim';
+    font-family: "Itim";
     box-sizing: border-box;
     border-style: solid;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
@@ -43,7 +59,7 @@
     background-color: #FFFFFF;
     background-clip: padding-box;
     width: 100%;
-    font-family: 'Itim';
+    font-family: "Itim";
     box-sizing: border-box;
     border-style: solid;
     outline: none;
@@ -104,10 +120,12 @@
         flex-basis: 60%;
         margin: 5px;
         padding: 5px;
+        overflow-y: scroll;
+        height: 82vh;
     }
 }
 
-@media screen and (max-width: 699px) {
+@media screen and (max-width: 700px) {
     .container {
         display: flex;
         justify-content: center;

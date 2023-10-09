@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
     <head>
         <title>Proximity</title>
         <link rel="shortcut icon" href="/static/icons/favicon.ico">
@@ -9,11 +9,11 @@
         <script src="static/js/index.js"></script>
     </head>
     <body class="sketch-background">
+        <div>
+            <a href="/" class="sketch-anchor"><h1 class="sketch-border sketch-border-title">Proximity</h1></a>
+        </div>
         <div class="container">
             <div class="item1">
-                <div>
-                    <a href="/" class="sketch-anchor"><h1 class="sketch-border sketch-border-button">Proximity</h1></a>
-                </div>
                 <div>
                     <input id="textbox" type="textbox" class="sketch-border sketch-border-textbox" placeholder="Title:"></input>
                 </div>
@@ -25,11 +25,10 @@
                 </div>
             </div>
             <div class="item2">
-                <div class="align-center">
-                    <a href="/"><button class="sketch-border sketch-border-button center">Near You</button></a>
-                </div>
+                <div id="loading"></div>
+                <div id="new-posts"></div>
                 <div id="posts">
-                </div>
+            </div>
             </div>
         </div>
     </body>
