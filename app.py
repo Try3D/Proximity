@@ -54,7 +54,8 @@ def get_posts():
     try:
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
     except sqlite3.OperationalError:
-        cur.execute("CREATE TABLE posts(id INT, title TEXT, content TEXT, latitude REAL, longitude REAL)")
+        cur.execute(
+            "CREATE TABLE posts(id INT, title TEXT, content TEXT, latitude REAL, longitude REAL)")
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
 
     a = []
@@ -100,6 +101,11 @@ def delete_post(id):
     return a
 
 
+@app.errorhandler(404)
+def return_404_error(error):
+    return render_template("404.html")
+
+
 def haversine_distance(lat_1, lon_1, lat_2, lon_2):
     r = 6361
     d_lat = deg_to_rad(lat_2 - lat_1)
@@ -113,6 +119,7 @@ def haversine_distance(lat_1, lon_1, lat_2, lon_2):
 
 def deg_to_rad(deg):
     return deg * math.pi / 180
+
 
 if __name__ == "__main__":
     app.run()
