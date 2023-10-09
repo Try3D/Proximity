@@ -22,7 +22,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/createPost")
+@app.route("/createPost", methods=["GET"])
 def create_post():
     title = request.args["title"]
     content = request.args["content"]
@@ -40,13 +40,15 @@ def create_post():
     else:
         id = 1
 
-    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [
-                id, title, content, latitude, longitude])
+    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [id, title, content, latitude, longitude])
     con.commit()
-    return [id]
+
+    post = cur.execute("SELECT * FROM posts WHERE ID = ?", [id])
+    for i in post:
+        return i
 
 
-@app.route("/getPosts")
+@app.route("/getPosts", methods=["GET"])
 def get_posts():
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
@@ -64,7 +66,7 @@ def get_posts():
     return a
 
 
-@app.route("/getPosts/<id>")
+@app.route("/getPosts/<id>", methods=["GET"])
 def get_post_by_id(id):
     posts = cur.execute("SELECT * FROM posts WHERE id IS ?", [id])
 
@@ -74,10 +76,12 @@ def get_post_by_id(id):
     return a
 
 
-@app.route("/updatePost/<id>")
+@app.route("/updatePost/<id>", methods=["PUT"])
 def update_post(id):
     content = request.args["content"]
-    cur.execute("UPDATE posts SET content=? WHERE id is ?", [content, id])
+    title = request.args["title"]
+    cur.execute("UPDATE posts SET title = ? WHERE id = ?", [title, id])
+    cur.execute("UPDATE posts SET content = ? WHERE id = ?", [content, id])
 
     posts = cur.execute("SELECT * FROM posts")
     a = []
@@ -86,9 +90,9 @@ def update_post(id):
     return a
 
 
-@app.route("/deletePost/<id>")
+@app.route("/deletePost/<id>", methods=["DELETE"])
 def delete_post(id):
-    cur.execute("DELETE FROM posts WHERE id IS ?", [id])
+    cur.execute("DELETE FROM posts WHERE id = ?", [id])
     posts = cur.execute("SELECT * FROM posts")
 
     a = []

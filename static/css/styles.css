@@ -74,19 +74,21 @@
 }
 
 .sketch-border-posts-public {
-    white-space: pre;
     background-clip: padding-box;
     background-color: #6CACE4;
     margin-top: 10px;
     border-image: url(../icons/posts-public.svg) 10 10 10 10 stretch stretch;
+    word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .sketch-border-posts-user {
-    white-space: pre;
     background-clip: padding-box;
     background-color: #26C485;
     margin-top: 10px;
     border-image: url(../icons/posts-user.svg) 10 10 10 10 stretch stretch;
+    word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .sketch-anchor {
@@ -103,13 +105,12 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-60%, -60%);
+    transform: translate(-50%, -50%);
 }
 
 @media screen and (min-width: 650px) {
     .container {
         word-break: break-all;
-        white-space: normal;
         display: flex;
         justify-content: center;
         margin: 5px;
@@ -134,7 +135,6 @@
 @media screen and (max-width: 650px) {
     .container {
         word-break: break-all;
-        white-space: normal;
         display: flex;
         justify-content: center;
         flex-direction: column;
