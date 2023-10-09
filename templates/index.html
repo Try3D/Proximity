@@ -1,35 +1,28 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<html lang="en">
-    <head>
-        <title>Proximity</title>
-        <link rel="shortcut icon" href="/static/icons/favicon.ico">
-        <link rel="stylesheet" href="/static/css/styles.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="static/js/index.js"></script>
-    </head>
-    <body class="sketch-background">
-        <div>
-            <a href="/" class="sketch-anchor"><h1 class="sketch-border sketch-border-title">Proximity</h1></a>
-        </div>
-        <div class="container">
-            <div class="item1">
-                <div>
-                    <input id="textbox" type="textbox" class="sketch-border sketch-border-textbox" placeholder="Title:"></input>
-                </div>
-                <div>
-                    <textarea id="textarea" class="sketch-border sketch-border-textarea" placeholder="What's on your mind?" rows="10" columns="100"></textarea>
-                </div>
-                <div>
-                    <button id="button" class="sketch-border sketch-border-button align-right">POST</button>
-                </div>
+{% block head %}
+    <title>Proximity</title>
+    <script src="static/js/index.js"></script>
+{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="/" class="sketch-anchor"><h1 class="sketch-border sketch-title">Proximity</h1></a>
+    </div>
+    <div class="container">
+        <div class="left-item">
+            <div>
+                <input id="textbox" type="textbox" class="sketch-border sketch-textbox" placeholder="Title:">
             </div>
-            <div class="item2">
-                <div id="loading"></div>
-                <div id="new-posts"></div>
-                <div id="posts">
+            <div>
+                <textarea id="textarea" class="sketch-border sketch-textarea" placeholder="What's on your mind?" rows="10" columns="100"></textarea>
             </div>
+            <div>
+                <button id="button" class="sketch-border sketch-button align-right">POST</button>
             </div>
         </div>
-    </body>
-</html>
+        <div class="right-item">
+            <div id="posts"></div>
+        </div>
+    </div>
+{% endblock %}

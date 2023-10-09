@@ -52,6 +52,7 @@ def create_post():
 def get_posts():
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
+
     try:
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
     except sqlite3.OperationalError:
@@ -66,7 +67,7 @@ def get_posts():
     return a
 
 
-@app.route("/getPosts/<id>", methods=["GET"])
+@app.route("/getPost/<id>", methods=["GET"])
 def get_post_by_id(id):
     posts = cur.execute("SELECT * FROM posts WHERE id IS ?", [id])
 
@@ -108,10 +109,10 @@ def return_404_error(error):
 
 def haversine_distance(lat_1, lon_1, lat_2, lon_2):
     r = 6361
-    d_lat = deg_to_rad(lat_2 - lat_1)
-    d_lon = deg_to_rad(lon_2 - lon_1)
-    a = math.sin(d_lat / 2) * math.sin(d_lat / 2) + math.cos(deg_to_rad(lat_1)) * \
-        math.cos(deg_to_rad(lat_2)) * math.sin(d_lon / 2) * math.sin(d_lon / 2)
+    d_lat = (lat_2 - lat_1) * math.pi / 180
+    d_lon = (lon_2 - lon_1) * math.pi / 180
+    a = math.sin(d_lat / 2) * math.sin(d_lat / 2) + math.cos(lat_1 * math.pi / 180) * \
+        math.cos(lat_2 * math.pi / 180) * math.sin(d_lon / 2) * math.sin(d_lon / 2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     d = r * c
     return d

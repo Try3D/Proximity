@@ -14,13 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('button').addEventListener('click', () => {
             title = document.getElementById('textbox').value
             content = document.getElementById('textarea').value.replace(/\n/g, "<br>")
+
+            document.getElementById('textbox').value = ''
+            document.getElementById('textarea').value = ''
+
             fetch(`/createPost?title=${title}&content=${content}&latitude=${latitude}&longitude=${longitude}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    userId = localStorage.getItem('userId')
-                    object = JSON.parse(userId)
-                    object.push(data[0])
-                    localStorage.setItem('userId', JSON.stringify(object))
+                    userId = JSON.parse(localStorage.getItem('userId'))
+                    userId.push(data['id'])
+                    localStorage.setItem('userId', JSON.stringify(userId))
                     updatePosts()
                 })
         })
@@ -41,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length == 0) {
                     div = document.createElement('div')
                     div.classList.add('sketch-border')
-                    div.classList.add('sketch-border-posts-public')
-                    div.innerHTML = '<h2>There are no posts near you</h2><div>Be the first to post something for others to see</div>'
+                    div.classList.add('sketch-posts-system')
+                    div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>'
                     document.getElementById('posts').append(div)
                 }
                 else {
@@ -51,12 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         div = document.createElement('div')
                         div.classList.add('sketch-border')
                         if (objects.includes(item['id'])) {
-                            div.classList.add('sketch-border-posts-user')
+                            div.classList.add('sketch-posts-user')
                         }
                         else {
-                            div.classList.add('sketch-border-posts-public')
+                            div.classList.add('sketch-posts-public')
                         }
-                        div.innerHTML = `<h2 class='sketch-post'>${item['title']}</h2><div class='sketch-post'>${item['content']}</div>`
+                        div.innerHTML = `<h2 class='post-text'>${item['title']}</h2><div class='post-text'>${item['content']}</div>`
                         document.getElementById('posts').append(div)
                     }
                 }

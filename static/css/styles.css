@@ -9,13 +9,13 @@
 }
 
 .sketch-border {
-    color: #3c3c3c;
+    color: #2c2c2c;
     box-sizing: border-box;
     border-style: solid;
     border-width: 10px 10px 10px 10px;
 }
 
-.sketch-border-title {
+.sketch-title {
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
@@ -30,7 +30,7 @@
     background-clip: padding-box;
 }
 
-.sketch-border-button {
+.sketch-button {
     font-weight: bold;
     cursor: pointer;
     font-family: "Itim";
@@ -42,7 +42,7 @@
     background-clip: padding-box;
 }
 
-.sketch-border-textbox {
+.sketch-textbox {
     background-color: #FFFFFF;
     background-clip: padding-box;
     width: 100%;
@@ -55,7 +55,8 @@
     resize: none;
 }
 
-.sketch-border-textarea {
+.sketch-textarea {
+    word-break: break-all;
     background-color: #FFFFFF;
     background-clip: padding-box;
     width: 100%;
@@ -68,12 +69,12 @@
     border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
 }
 
-.sketch-post {
+.post-text {
     padding: 3px;
     margin: 3px;
 }
 
-.sketch-border-posts-public {
+.sketch-posts-public {
     background-clip: padding-box;
     background-color: #6CACE4;
     margin-top: 10px;
@@ -82,11 +83,20 @@
     white-space: pre-wrap;
 }
 
-.sketch-border-posts-user {
+.sketch-posts-user {
     background-clip: padding-box;
     background-color: #26C485;
     margin-top: 10px;
     border-image: url(../icons/posts-user.svg) 10 10 10 10 stretch stretch;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.sketch-posts-system {
+    background-clip: padding-box;
+    background-color: #DD2D4A;
+    margin-top: 10px;
+    border-image: url(../icons/posts-system.svg) 10 10 10 10 stretch stretch;
     word-break: break-word;
     white-space: pre-wrap;
 }
@@ -117,13 +127,13 @@
         padding: 5px;
     }
 
-    .item1 {
+    .left-item {
         flex-basis: 40%;
         margin: 5px;
         padding: 5px;
     }
 
-    .item2 {
+    .right-item {
         flex-basis: 60%;
         margin: 5px;
         padding: 5px;
@@ -142,12 +152,12 @@
         padding: 5px;
     }
 
-    .item1 {
+    .left-item {
         margin: 5px;
         padding: 5px;
     }
 
-    .item2 {
+    .right-item {
         margin: 5px;
         padding: 5px;
     }
