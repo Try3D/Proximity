@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch(`/createPost?title=${title}&content=${content}&latitude=${latitude}&longitude=${longitude}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
                     userId = localStorage.getItem('userId')
                     object = JSON.parse(userId)
                     object.push(data[0])
