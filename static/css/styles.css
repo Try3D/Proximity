@@ -74,6 +74,7 @@
 }
 
 .sketch-border-posts-public {
+    white-space: pre;
     background-clip: padding-box;
     background-color: #6CACE4;
     margin-top: 10px;
@@ -81,6 +82,7 @@
 }
 
 .sketch-border-posts-user {
+    white-space: pre;
     background-clip: padding-box;
     background-color: #26C485;
     margin-top: 10px;
@@ -106,6 +108,8 @@
 
 @media screen and (min-width: 650px) {
     .container {
+        word-break: break-all;
+        white-space: normal;
         display: flex;
         justify-content: center;
         margin: 5px;
@@ -129,6 +133,8 @@
 
 @media screen and (max-width: 650px) {
     .container {
+        word-break: break-all;
+        white-space: normal;
         display: flex;
         justify-content: center;
         flex-direction: column;

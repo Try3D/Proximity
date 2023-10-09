@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('button').addEventListener('click', () => {
             title = document.getElementById('textbox').value
-            content = document.getElementById('textarea').value
-            textcontent = content.replace(/\r?\n/g, '&#13;')
+            content = document.getElementById('textarea').value.replace(/\n/g,"<br>")
             fetch(`/createPost?title=${title}&content=${content}&latitude=${latitude}&longitude=${longitude}`)
                 .then((res) => res.json())
                 .then((data) => {

@@ -12,6 +12,7 @@ def dict_factory(cursor, row):
 
 con = sqlite3.connect("posts.db", check_same_thread=False)
 con.row_factory = dict_factory
+cur = con.cursor()
 
 app = Flask(__name__)
 
@@ -28,7 +29,6 @@ def create_post():
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
 
-    cur = con.cursor()
     posts = cur.execute("SELECT COUNT(*) as count FROM posts")
     for post in posts:
         count = post["count"]
@@ -48,7 +48,6 @@ def create_post():
 
 @app.route("/getPosts")
 def get_posts():
-    cur = con.cursor()
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
     try:
@@ -67,7 +66,6 @@ def get_posts():
 
 @app.route("/getPosts/<id>")
 def get_post_by_id(id):
-    cur = con.cursor()
     posts = cur.execute("SELECT * FROM posts WHERE id IS ?", [id])
 
     a = []
@@ -79,7 +77,6 @@ def get_post_by_id(id):
 @app.route("/updatePost/<id>")
 def update_post(id):
     content = request.args["content"]
-    cur = con.cursor()
     cur.execute("UPDATE posts SET content=? WHERE id is ?", [content, id])
 
     posts = cur.execute("SELECT * FROM posts")
@@ -91,7 +88,6 @@ def update_post(id):
 
 @app.route("/deletePost/<id>")
 def delete_post(id):
-    cur = con.cursor()
     cur.execute("DELETE FROM posts WHERE id IS ?", [id])
     posts = cur.execute("SELECT * FROM posts")
 
