@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        updatePosts();
+        updatePosts(latitude, longitude);
 
         document.getElementById("button").addEventListener("click", () => {
             var title = document.getElementById("textbox").value;
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     userId = JSON.parse(localStorage.getItem("userId"));
                     userId.push(data["id"]);
                     localStorage.setItem("userId", JSON.stringify(userId));
-                    updatePosts();
+                    updatePosts(latitude, longitude);
                 });
         });
     }
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("This application requires browser geolocation to work");
     }
 
-    function updatePosts() {
+    function updatePosts(latitude, longitude) {
         fetch(`/getPosts?latitude=${latitude}&longitude=${longitude}`)
             .then((res) => res.json())
             .then((data) => {
