@@ -74,31 +74,26 @@
     margin: 3px;
 }
 
-.sketch-posts-public {
+.sketch-posts-public, .sketch-posts-user, .sketch-posts-system {
     background-clip: padding-box;
-    background-color: #6CACE4;
     margin-top: 10px;
-    border-image: url(../icons/posts-public.svg) 10 10 10 10 stretch stretch;
     word-break: break-word;
     white-space: pre-wrap;
+}
+
+.sketch-posts-public {
+    border-image: url(../icons/posts-public.svg) 10 10 10 10 stretch stretch;
+    background-color: #6CACE4;
 }
 
 .sketch-posts-user {
-    background-clip: padding-box;
-    background-color: #26C485;
-    margin-top: 10px;
     border-image: url(../icons/posts-user.svg) 10 10 10 10 stretch stretch;
-    word-break: break-word;
-    white-space: pre-wrap;
+    background-color: #26C485;
 }
 
 .sketch-posts-system {
-    background-clip: padding-box;
-    background-color: #DD2D4A;
-    margin-top: 10px;
     border-image: url(../icons/posts-system.svg) 10 10 10 10 stretch stretch;
-    word-break: break-word;
-    white-space: pre-wrap;
+    background-color: #DD2D4A;
 }
 
 .sketch-anchor {
@@ -118,25 +113,24 @@
     transform: translate(-50%, -50%);
 }
 
-@media screen and (min-width: 650px) {
-    .container {
-        word-break: break-all;
-        display: flex;
-        justify-content: center;
-        margin: 5px;
-        padding: 5px;
-    }
+.container {
+    word-break: break-all;
+    display: flex;
+    justify-content: center;
+}
 
+.left-item, .right-item, .container {
+    margin: 5px;
+    padding: 5px;
+}
+
+@media screen and (min-width: 650px) {
     .left-item {
         flex-basis: 40%;
-        margin: 5px;
-        padding: 5px;
     }
 
     .right-item {
         flex-basis: 60%;
-        margin: 5px;
-        padding: 5px;
         overflow-y: scroll;
         height: calc(100vh - 121px);
     }
@@ -144,21 +138,6 @@
 
 @media screen and (max-width: 650px) {
     .container {
-        word-break: break-all;
-        display: flex;
-        justify-content: center;
         flex-direction: column;
-        margin: 5px;
-        padding: 5px;
-    }
-
-    .left-item {
-        margin: 5px;
-        padding: 5px;
-    }
-
-    .right-item {
-        margin: 5px;
-        padding: 5px;
     }
 }
