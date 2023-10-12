@@ -3,9 +3,26 @@
     src: url("../fonts/Itim-Regular.ttf");
 }
 
+.visible-popup {
+    position: absolute;
+    top: 5%;
+    left: 7.5%;
+    width: 85%;
+    background-color: rgba(255, 255, 255, 1);
+    color: #2c2c2c;
+    box-sizing: border-box;
+    text-align: left;
+    margin: auto;
+}
+
+.invisible-popup {
+    pointer-events: none;
+    opacity: 0;
+}
+
 .sketch-background {
     font-family: "Itim";
-    background-color: #FDF7F1;
+    background-color: #fdf7f2;
 }
 
 .sketch-border {
@@ -26,55 +43,57 @@
     font-size: 2em;
     text-align: center;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     background-clip: padding-box;
 }
 
-.sketch-button {
-    font-weight: bold;
-    cursor: pointer;
+.sketch-button, .sketch-textbox, .sketch-textarea {
+    box-sizing: border-box;
     font-family: "Itim";
+    font-weight: bold;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border-style: solid;
+    outline: none;
+}
+
+.sketch-button {
+    cursor: pointer;
     margin-top: 5px;
     font-size: 1em;
     text-align: center;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
-    background-color: #FFFFFF;
-    background-clip: padding-box;
 }
 
 .sketch-textbox {
-    background-color: #FFFFFF;
-    background-clip: padding-box;
     width: 100%;
-    font-family: "Itim";
-    box-sizing: border-box;
-    border-style: solid;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
-    outline: none;
-    overflow: hidden;
-    resize: none;
 }
 
 .sketch-textarea {
-    word-break: break-all;
-    background-color: #FFFFFF;
-    background-clip: padding-box;
     width: 100%;
-    font-family: "Itim";
     box-sizing: border-box;
-    border-style: solid;
-    outline: none;
+    border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
     overflow: hidden;
     resize: none;
-    border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
 }
 
-.post-text {
+.post-title, .post-text {
     padding: 3px;
     margin: 3px;
 }
 
+.post-title {
+    font-size: 1.7em;
+}
+
+.post-text {
+    font-size: 1.3em;
+}
+
+
 .sketch-posts-public, .sketch-posts-user, .sketch-posts-system {
+    cursor: pointer;
     background-clip: padding-box;
     margin-top: 10px;
     word-break: break-word;
@@ -83,23 +102,23 @@
 
 .sketch-posts-public {
     border-image: url(../icons/posts-public.svg) 10 10 10 10 stretch stretch;
-    background-color: #6CACE4;
+    background-color: #6cace4;
 }
 
 .sketch-posts-user {
     border-image: url(../icons/posts-user.svg) 10 10 10 10 stretch stretch;
-    background-color: #26C485;
+    background-color: #26c485;
 }
 
 .sketch-posts-system {
     border-image: url(../icons/posts-system.svg) 10 10 10 10 stretch stretch;
-    background-color: #DD2D4A;
+    background-color: #dd2d4a;
 }
 
 .sketch-anchor {
     text-align: center;
     text-decoration: none;
-    color: #3c3c3c;
+    color: #2c2c2c;
 }
 
 .align-right {
@@ -107,21 +126,22 @@
 }
 
 .center {
+    font-size: 1.5em;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
+.left-item, .right-item, .container {
+    margin: 5px;
+    padding: 5px;
+}
+
 .container {
     word-break: break-all;
     display: flex;
     justify-content: center;
-}
-
-.left-item, .right-item, .container {
-    margin: 5px;
-    padding: 5px;
 }
 
 @media screen and (min-width: 650px) {
@@ -132,7 +152,7 @@
     .right-item {
         flex-basis: 60%;
         overflow-y: scroll;
-        height: calc(100vh - 121px);
+        height: calc(100vh - 122px);
     }
 }
 

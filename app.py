@@ -29,23 +29,25 @@ def create_post():
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
 
-    posts = cur.execute("SELECT COUNT(*) as count FROM posts")
-    for post in posts:
-        count = post["count"]
+    last_post = cur.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
 
-    if count:
-        p = cur.execute("SELECT * FROM posts")
-        for b in p:
-            id = int(b["id"]) + 1
+    id = 0
+    for post in last_post:
+        id = post["id"]
+    if id:
+        id += 1
     else:
         id = 1
 
-    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [id, title, content, latitude, longitude])
+    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [
+                id, title, content, latitude, longitude])
     con.commit()
 
     post = cur.execute("SELECT * FROM posts WHERE ID = ?", [id])
     for i in post:
         return i
+    else:
+        return {}
 
 
 @app.route("/getPosts", methods=["GET"])
@@ -104,7 +106,7 @@ def delete_post(id):
 
 @app.errorhandler(404)
 def return_404_error(error):
-    return render_template("404.html")
+    return render_template("error404.html", error=error)
 
 
 def haversine_distance(lat_1, lon_1, lat_2, lon_2):
@@ -112,7 +114,8 @@ def haversine_distance(lat_1, lon_1, lat_2, lon_2):
     d_lat = (lat_2 - lat_1) * math.pi / 180
     d_lon = (lon_2 - lon_1) * math.pi / 180
     a = math.sin(d_lat / 2) * math.sin(d_lat / 2) + math.cos(lat_1 * math.pi / 180) * \
-        math.cos(lat_2 * math.pi / 180) * math.sin(d_lon / 2) * math.sin(d_lon / 2)
+        math.cos(lat_2 * math.pi / 180) * \
+        math.sin(d_lon / 2) * math.sin(d_lon / 2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     d = r * c
     return d
