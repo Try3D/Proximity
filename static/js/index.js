@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updatePosts(latitude, longitude);
 
-        // setInterval(() => { updatePosts(latitude, longitude) }, 5000);
+        setInterval(() => { updatePosts(latitude, longitude) }, 5000);
 
         document.querySelector("#button").addEventListener("click", () => {
             const title = document.querySelector("#textbox").value;
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.json())
                 .then(data => {
                     const userId = JSON.parse(localStorage.getItem("userId"));
-                    userId.push(data["id"]);
+                    userId.push(parseInt(data["id"]));
                     localStorage.setItem("userId", JSON.stringify(userId));
                     updatePosts(latitude, longitude);
             });
