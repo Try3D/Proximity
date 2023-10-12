@@ -11,17 +11,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updatePosts(latitude, longitude);
 
-        document.getElementById("button").addEventListener("click", () => {
-            var title = document.getElementById("textbox").value;
-            var content = document.getElementById("textarea").value.replace(/\n/g, "<br>");
+        setInterval(() => { updatePosts(latitude, longitude) }, 5000);
 
-            document.getElementById("textbox").value = "";
-            document.getElementById("textarea").value = "";
+        document.querySelector("#button").addEventListener("click", () => {
+            const title = document.querySelector("#textbox").value;
+            const content = document.querySelector("#textarea").value.replace(/\n/g, "<br>");
 
-            fetch(`/createPost?title=${title}&content=${content}&latitude=${latitude}&longitude=${longitude}`)
+            document.querySelector("#textbox").value = "";
+            document.querySelector("#textarea").value = "";
+
+            const postData = {
+                title: title,
+                content: content,
+                latitude: latitude,
+                longitude: longitude,
+            };
+
+            fetch("/createPost", {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
                 .then(res => res.json())
                 .then(data => {
-                    userId = JSON.parse(localStorage.getItem("userId"));
+                    const userId = JSON.parse(localStorage.getItem("userId"));
                     userId.push(data["id"]);
                     localStorage.setItem("userId", JSON.stringify(userId));
                     updatePosts(latitude, longitude);
@@ -37,18 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(`/getPosts?latitude=${latitude}&longitude=${longitude}`)
             .then(res => res.json())
             .then(data => {
-                document.getElementById("posts").innerHTML = "";
+                const posts = document.querySelector("#posts");
+                posts.innerHTML = "";
+
                 if (data.length == 0) {
-                    let div = document.createElement("div");
+                    const div = document.createElement("div");
                     div.classList.add("sketch-border");
                     div.classList.add("sketch-posts-system");
                     div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>';
-                    document.getElementById("posts").append(div);
+                    posts.append(div);
                 }
                 else {
                     for (let item of data) {
-                        objects = JSON.parse(localStorage.getItem("userId"));
-                        let div = document.createElement("div");
+                        const objects = JSON.parse(localStorage.getItem("userId"));
+                        const div = document.createElement("div");
                         div.classList.add("sketch-border");
                         if (objects.includes(item["id"])) {
                             div.classList.add("sketch-posts-user");
@@ -57,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             div.classList.add("sketch-posts-public");
                         }
                         div.innerHTML = `<h2 class='post-title'>${item["title"]}</h2><div class='post-text'>${item["content"]}</div>`;
-                        document.getElementById("posts").append(div);
+                        posts.append(div);
                     }
                 }
             });

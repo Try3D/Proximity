@@ -3,23 +3,6 @@
     src: url("../fonts/Itim-Regular.ttf");
 }
 
-.visible-popup {
-    position: absolute;
-    top: 5%;
-    left: 7.5%;
-    width: 85%;
-    background-color: rgba(255, 255, 255, 1);
-    color: #2c2c2c;
-    box-sizing: border-box;
-    text-align: left;
-    margin: auto;
-}
-
-.invisible-popup {
-    pointer-events: none;
-    opacity: 0;
-}
-
 .sketch-background {
     font-family: "Itim";
     background-color: #fdf7f2;
@@ -93,7 +76,6 @@
 
 
 .sketch-posts-public, .sketch-posts-user, .sketch-posts-system {
-    cursor: pointer;
     background-clip: padding-box;
     margin-top: 10px;
     word-break: break-word;
