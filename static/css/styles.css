@@ -30,7 +30,12 @@
     background-clip: padding-box;
 }
 
-.sketch-button, .sketch-textbox, .sketch-textarea {
+.sketch-title:hover {
+    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
+    background-color: #dddddd;
+}
+
+.sketch-button, .sketch-textbox, .sketch-textarea, .sketch-button-click {
     box-sizing: border-box;
     font-family: "Itim";
     font-weight: bold;
@@ -48,9 +53,19 @@
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
 }
 
+.sketch-button:hover {
+    background-color: #dddddd;
+    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
+}
+
 .sketch-textbox {
     width: 100%;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+}
+
+.sketch-textbox:hover {
+    background-color: #dddddd;
+    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
 }
 
 .sketch-textarea {
@@ -59,6 +74,11 @@
     border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
     overflow: hidden;
     resize: none;
+}
+
+.sketch-textarea:hover {
+    background-color: #dddddd;
+    border-image: url(../icons/textarea-hover.svg) 10 10 10 10 stretch stretch;
 }
 
 .post-title, .post-text {

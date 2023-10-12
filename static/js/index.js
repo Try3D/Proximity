@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         updatePosts(latitude, longitude);
 
-        setInterval(() => { updatePosts(latitude, longitude) }, 5000);
+        // setInterval(() => { updatePosts(latitude, longitude) }, 5000);
 
         document.querySelector("#button").addEventListener("click", () => {
             const title = document.querySelector("#textbox").value;
@@ -64,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 else {
                     for (let item of data) {
+                        console.log(item["id"])
+
                         const objects = JSON.parse(localStorage.getItem("userId"));
                         const div = document.createElement("div");
                         div.classList.add("sketch-border");
