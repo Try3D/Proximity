@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     userId.push(parseInt(data["id"]));
                     localStorage.setItem("userId", JSON.stringify(userId));
                     updatePosts(latitude, longitude);
-            });
+                });
         });
     }
 
@@ -59,23 +59,48 @@ document.addEventListener("DOMContentLoaded", () => {
                     const div = document.createElement("div");
                     div.classList.add("sketch-border");
                     div.classList.add("sketch-posts-system");
+
+
                     div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>';
                     posts.append(div);
                 }
                 else {
                     for (let item of data) {
-                        console.log(item["id"])
-
                         const objects = JSON.parse(localStorage.getItem("userId"));
                         const div = document.createElement("div");
                         div.classList.add("sketch-border");
+
                         if (objects.includes(item["id"])) {
                             div.classList.add("sketch-posts-user");
+
+                            const button = document.createElement("button");
+                            button.innerHTML = "<img src='/static/icons/close.svg' alt='delete' width=15>";
+                            button.classList.add("close")
+
+                            button.addEventListener("click", () => {
+                                fetch("/deletePost/" + item["id"], {
+                                    method: "DELETE",
+                                })
+                                    .then(() => {
+                                        updatePosts(latitude, longitude)
+                                    })
+                            })
+                            div.append(button);
                         }
                         else {
                             div.classList.add("sketch-posts-public");
                         }
-                        div.innerHTML = `<h2 class='post-title'>${item["title"]}</h2><div class='post-text'>${item["content"]}</div>`;
+
+                        const post = document.createElement('h2');
+                        post.innerHTML = item["title"];
+                        post.classList.add("post-title");
+
+                        const content = document.createElement("div");
+                        content.innerHTML = item["content"];
+                        content.classList.add("post-text");
+
+                        div.append(post);
+                        div.append(content);
                         posts.append(div);
                     }
                 }

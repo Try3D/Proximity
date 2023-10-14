@@ -102,17 +102,8 @@ def update_post(id):
 
 @app.route("/deletePost/<id>", methods=["DELETE"])
 def delete_post(id):
-    posts = cur.execute("SELECT * FROM posts WHERE id = ?", [id])
-
-    n = 0
-    for _ in posts:
-        n += 1
-
-    if n:
-        cur.execute("DELETE FROM posts WHERE id = ?", [id])
-        return {"message": "Post deleted"}
-    else:
-        return {"message": "Post not found"}
+    cur.execute("DELETE FROM posts WHERE id = ?", [id])
+    return {"message": "Post deleted"}
 
 
 @app.errorhandler(404)

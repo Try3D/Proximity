@@ -30,11 +30,6 @@
     background-clip: padding-box;
 }
 
-.sketch-title:hover {
-    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
-    background-color: #dddddd;
-}
-
 .sketch-button, .sketch-textbox, .sketch-textarea, .sketch-button-click {
     box-sizing: border-box;
     font-family: "Itim";
@@ -53,19 +48,9 @@
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
 }
 
-.sketch-button:hover {
-    background-color: #dddddd;
-    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
-}
-
 .sketch-textbox {
     width: 100%;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
-}
-
-.sketch-textbox:hover {
-    background-color: #dddddd;
-    border-image: url(../icons/button-hover.svg) 10 10 10 10 stretch stretch;
 }
 
 .sketch-textarea {
@@ -74,11 +59,6 @@
     border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
     overflow: hidden;
     resize: none;
-}
-
-.sketch-textarea:hover {
-    background-color: #dddddd;
-    border-image: url(../icons/textarea-hover.svg) 10 10 10 10 stretch stretch;
 }
 
 .post-title, .post-text {
@@ -125,6 +105,15 @@
 
 .align-right {
     float: right;
+}
+
+.close {
+    color: #2c2c2c;
+    background-color: transparent;
+    border: transparent;
+    float: right;
+    cursor: pointer;
+    padding: 0px;
 }
 
 .center {
