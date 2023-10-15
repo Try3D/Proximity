@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setInterval(updatePosts, 5000);
         
-        button = document.querySelector("#button")
+        button = document.querySelector("#button");
         button.addEventListener("click", clickButton);
 
         function clickButton() {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     "Content-Type": 'application/json'
                 },
-                body: JSON.stringify(postData)
+                body: JSON.stringify(postData),
             })
                 .then(res => res.json())
                 .then(data => {
@@ -83,20 +83,20 @@ document.addEventListener("DOMContentLoaded", () => {
                                         .then(data => {
                                             const title = document.querySelector("#textbox");
                                             const content = document.querySelector("#textarea");
-                                            const button = document.querySelector("#button")
+                                            const button = document.querySelector("#button");
 
                                             title.value = data[0]["title"];
                                             content.value = data[0]["content"];
-                                            button.innerHTML = "UPDATE POST"
+                                            button.innerHTML = "UPDATE POST";
 
-                                            button.removeEventListener("click", clickButton)
-                                            button.addEventListener("click", updateButton)
+                                            button.removeEventListener("click", clickButton);
+                                            button.addEventListener("click", updateButton);
 
                                             function updateButton() {
                                                 fetch("/updatePost/" + item["id"], {
                                                     method: "PUT",
                                                     headers: {
-                                                        "Content-Type": 'application/json'
+                                                        "Content-Type": 'application/json',
                                                     },
                                                     body : JSON.stringify({
                                                         title: title.value,
@@ -109,9 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                                         button.removeEventListener("click", updateButton);
                                                         button.addEventListener("click", clickButton);
-                                                        button.innerHTML = "POST"
+                                                        button.innerHTML = "POST";
 
-                                                        updatePosts()
+                                                        updatePosts();
                                                     })
                                             }
                                         })
@@ -119,14 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 const close = document.createElement("button");
                                 close.innerHTML = "<img src='/static/icons/close.svg' alt='delete' width=17>";
-                                close.classList.add("buttons")
+                                close.classList.add("buttons");
 
                                 close.addEventListener("click", () => {
                                     fetch("/deletePost/" + item["id"], {
                                         method: "DELETE",
                                     })
                                         .then(() => {
-                                            updatePosts()
+                                            updatePosts();
                                         })
                                 })
 
