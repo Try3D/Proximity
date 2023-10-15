@@ -12,7 +12,6 @@ def dict_factory(cursor, row):
 
 con = sqlite3.connect("posts.db", check_same_thread=False)
 con.row_factory = dict_factory
-cur = con.cursor()
 
 app = Flask(__name__)
 
@@ -30,31 +29,26 @@ def create_post():
     latitude = float(data["latitude"])
     longitude = float(data["longitude"])
 
-    last_post = cur.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
-
-    id = 0
-    for post in last_post:
-        id = post["id"]
-    if id:
-        id += 1
-    else:
-        id = 1
-
-    cur.execute("INSERT INTO posts (id, title, content, latitude, longitude) VALUES (?, ?, ?, ?, ?)", [id, title, content, latitude, longitude])
+    cur = con.cursor()
+    cur.execute("INSERT INTO posts (title, content, latitude, longitude) VALUES (?, ?, ?, ?)", [title, content, latitude, longitude])
     con.commit()
 
-    return {"message": "Post created", "id": f"{id}"}
+    post = cur.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
+    for p in post:
+        return {"message": "Post created", "id": f"{p['id']}"}
+
 
 
 @app.route("/getPosts", methods=["GET"])
 def get_posts():
     latitude = float(request.args["latitude"])
     longitude = float(request.args["longitude"])
+    cur = con.cursor()
 
     try:
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
     except sqlite3.OperationalError:
-        cur.execute("CREATE TABLE posts(id INT, title TEXT, content TEXT, latitude REAL, longitude REAL)")
+        cur.execute("CREATE TABLE posts(id INTEGER PRIMARY KEY, title TEXT, content TEXT, latitude REAL, longitude REAL)")
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
 
     a = []
@@ -66,6 +60,7 @@ def get_posts():
 
 @app.route("/getPost/<id>", methods=["GET"])
 def get_post(id):
+    cur = con.cursor()
     posts = cur.execute("SELECT * FROM posts WHERE id = ?", [id])
 
     a = []
@@ -83,6 +78,7 @@ def get_post(id):
 
 @app.route("/updatePost/<id>", methods=["PUT"])
 def update_post(id):
+    cur = con.cursor()
     posts = cur.execute("SELECT * FROM posts WHERE id = ?", [id])
 
     n = 0
@@ -90,11 +86,19 @@ def update_post(id):
         n += 1
 
     if n:
-        content = request.args["content"]
-        title = request.args["title"]
+        up = request.get_json()
+
+        content = up["content"]
+        title = up["title"]
+
+        cur = con.cursor()
         cur.execute("UPDATE posts SET title = ? WHERE id = ?", [title, id])
+        con.commit()
+
+        cur = con.cursor()
         cur.execute("UPDATE posts SET content = ? WHERE id = ?", [content, id])
-        posts = cur.execute("SELECT * FROM posts")
+        con.commit()
+
         return {"message": "Post updated"}
     else:
         return {"message": "Post not found"}
@@ -102,8 +106,19 @@ def update_post(id):
 
 @app.route("/deletePost/<id>", methods=["DELETE"])
 def delete_post(id):
-    cur.execute("DELETE FROM posts WHERE id = ?", [id])
-    return {"message": "Post deleted"}
+    cur = con.cursor()
+    posts = cur.execute("SELECT * FROM posts WHERE id = ?", [id])
+
+    n = 0
+    for _ in posts:
+        n += 1
+
+    if n:
+        cur.execute("DELETE FROM posts WHERE id = ?", [id])
+        con.commit()
+        return {"message": "Post deleted"}
+    else:
+        return {"message": "Post not found"}
 
 
 @app.errorhandler(404)

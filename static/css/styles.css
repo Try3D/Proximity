@@ -107,8 +107,8 @@
     float: right;
 }
 
-.close {
-    color: #2c2c2c;
+.buttons {
+    margin: 4px;
     background-color: transparent;
     border: transparent;
     float: right;
