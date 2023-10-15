@@ -93,12 +93,9 @@ def update_post(id):
 
         cur = con.cursor()
         cur.execute("UPDATE posts SET title = ? WHERE id = ?", [title, id])
-        con.commit()
-
-        cur = con.cursor()
         cur.execute("UPDATE posts SET content = ? WHERE id = ?", [content, id])
-        con.commit()
 
+        con.commit()
         return {"message": "Post updated"}
     else:
         return {"message": "Post not found"}

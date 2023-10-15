@@ -81,33 +81,39 @@ document.addEventListener("DOMContentLoaded", () => {
                                     })
                                         .then(res => res.json())
                                         .then(data => {
-                                            document.getElementById("textbox").value = data[0]["title"];
-                                            document.getElementById("textarea").value = data[0]["content"];
-                                            const button = document.getElementById("button")
+                                            const title = document.querySelector("#textbox");
+                                            const content = document.querySelector("#textarea");
+                                            const button = document.querySelector("#button")
+
+                                            title.value = data[0]["title"];
+                                            content.value = data[0]["content"];
                                             button.innerHTML = "UPDATE POST"
 
                                             button.removeEventListener("click", clickButton)
+                                            button.addEventListener("click", updateButton)
 
-                                            button.addEventListener("click", () => {
+                                            function updateButton() {
                                                 fetch("/updatePost/" + item["id"], {
                                                     method: "PUT",
                                                     headers: {
                                                         "Content-Type": 'application/json'
                                                     },
                                                     body : JSON.stringify({
-                                                        title: document.getElementById("textbox").value,
-                                                        content: document.getElementById("textarea").value,
+                                                        title: title.value,
+                                                        content: content.value,
                                                     })
                                                 })
                                                     .then(() => {
                                                         document.querySelector("#textbox").value = "";
                                                         document.querySelector("#textarea").value = "";
 
-                                                        button.addEventListener("click", clickButton)
+                                                        button.removeEventListener("click", updateButton);
+                                                        button.addEventListener("click", clickButton);
                                                         button.innerHTML = "POST"
+
                                                         updatePosts()
                                                     })
-                                            })
+                                            }
                                         })
                                 })
 
