@@ -149,42 +149,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                 div.append(close);
                                 div.append(edit);
+
+                                const post = document.createElement('h2');
+                                post.innerHTML = button["title"];
+                                post.classList.add("post-title");
+
+                                const content = document.createElement("div");
+                                content.innerHTML = button["content"];
+                                content.classList.add("post-text");
+
+                                div.append(post);
+                                div.append(content);
+                                posts.append(div);
+
+                                let clone = div.cloneNode(true)
+                                let buttons = clone.querySelectorAll('.buttons');
+
+                                for (button of buttons) {
+                                    button.parentNode.removeChild(button)
+                                }
+
+                                const modal = document.getElementById('modal');
+                                const modalContent = document.getElementById("modal-content")
+
+                                div.addEventListener("click", () => {
+                                        modalContent.innerHTML = ""
+                                        modalContent.append(clone)
+                                        modal.style.display = 'block';
+                                })
+
+                                window.onclick = function(event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
+                                }
                             }
                             else {
                                 div.classList.add("sketch-posts-public");
-                            }
 
-                            const post = document.createElement('h2');
-                            post.innerHTML = button["title"];
-                            post.classList.add("post-title");
+                                const post = document.createElement('h2');
+                                post.innerHTML = button["title"];
+                                post.classList.add("post-title");
 
-                            const content = document.createElement("div");
-                            content.innerHTML = button["content"];
-                            content.classList.add("post-text");
+                                const content = document.createElement("div");
+                                content.innerHTML = button["content"];
+                                content.classList.add("post-text");
 
-                            div.append(post);
-                            div.append(content);
-                            posts.append(div);
+                                div.append(post);
+                                div.append(content);
+                                posts.append(div);
 
-                            let clone = div.cloneNode(true)
-                            let buttons = clone.querySelectorAll('.buttons');
+                                let clone = div.cloneNode(true)
+                                let buttons = clone.querySelectorAll('.buttons');
 
-                            for (button of buttons) {
-                                button.parentNode.removeChild(button)
-                            }
+                                for (button of buttons) {
+                                    button.parentNode.removeChild(button)
+                                }
 
-                            const modal = document.getElementById('modal');
-                            const modalContent = document.getElementById("modal-content")
+                                const modal = document.getElementById('modal');
+                                const modalContent = document.getElementById("modal-content")
 
-                            div.addEventListener("click", () => {
-                                    modalContent.innerHTML = ""
-                                    modalContent.append(clone)
-                                    modal.style.display = 'block';
-                            })
+                                div.addEventListener("click", () => {
+                                        modalContent.innerHTML = ""
+                                        modalContent.append(clone)
+                                        modal.style.display = 'block';
+                                })
 
-                            window.onclick = function(event) {
-                                if (event.target == modal) {
-                                    modal.style.display = 'none';
+                                window.onclick = function(event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
                                 }
                             }
                         }
