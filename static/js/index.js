@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         div.classList.add("sketch-border");
                         div.classList.add("sketch-posts-system");
 
-
                         div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>';
                         posts.append(div);
 
@@ -80,20 +79,50 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
                     else {
-                        for (let button of data) {
+                        for (let item of data) {
                             const objects = JSON.parse(localStorage.getItem("userId"));
                             const div = document.createElement("div");
                             div.classList.add("sketch-border");
 
-                            if (objects.includes(button["id"])) {
+                            if (objects.includes(item["id"])) {
                                 div.classList.add("sketch-posts-user");
+
+                                const post = document.createElement('h2');
+                                post.innerHTML = item["title"];
+                                post.classList.add("post-title");
+
+                                const content = document.createElement("div");
+                                content.innerHTML = item["content"];
+                                content.classList.add("post-text");
+
+                                div.append(post);
+                                div.append(content);
+                                posts.append(div);
+
+                                let clone = div.cloneNode(true)
+
+                                const modal = document.getElementById('modal');
+                                const modalContent = document.getElementById("modal-content")
+
+                                div.addEventListener("click", () => {
+                                        modalContent.innerHTML = ""
+                                        modalContent.append(clone)
+                                        modal.style.display = 'block';
+                                })
+
+                                window.onclick = function(event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
+                                }
 
                                 const edit = document.createElement("button");
                                 edit.innerHTML = "<img src='/static/icons/edit.svg' alt='delete' width=17>";
                                 edit.classList.add("buttons")
 
-                                edit.addEventListener("click", () => {
-                                    fetch("/getPost/" + button["id"], {
+                                edit.addEventListener("click", event => {
+                                    event.stopPropagation();
+                                    fetch("/getPost/" + item["id"], {
                                         method: "GET",
                                     })
                                         .then(res => res.json())
@@ -110,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                             button.addEventListener("click", updateButton);
 
                                             function updateButton() {
-                                                fetch("/updatePost/" + button["id"], {
+                                                fetch("/updatePost/" + item["id"], {
                                                     method: "PUT",
                                                     headers: {
                                                         "Content-Type": 'application/json',
@@ -121,8 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                                     })
                                                 })
                                                     .then(() => {
-                                                        document.querySelector("#textbox").value = "";
-                                                        document.querySelector("#textarea").value = "";
+                                                        title.value = "";
+                                                        content.value = "";
 
                                                         button.removeEventListener("click", updateButton);
                                                         button.addEventListener("click", clickButton);
@@ -138,61 +167,27 @@ document.addEventListener("DOMContentLoaded", () => {
                                 close.innerHTML = "<img src='/static/icons/close.svg' alt='delete' width=17>";
                                 close.classList.add("buttons");
 
-                                close.addEventListener("click", () => {
-                                    fetch("/deletePost/" + button["id"], {
+                                close.addEventListener("click", event => {
+                                    event.stopPropagation();
+                                    fetch("/deletePost/" + item["id"], {
                                         method: "DELETE",
                                     })
                                         .then(() => {
                                             updatePosts();
                                         })
                                 })
-
-                                div.append(close);
-                                div.append(edit);
-
-                                const post = document.createElement('h2');
-                                post.innerHTML = button["title"];
-                                post.classList.add("post-title");
-
-                                const content = document.createElement("div");
-                                content.innerHTML = button["content"];
-                                content.classList.add("post-text");
-
-                                div.append(post);
-                                div.append(content);
-                                posts.append(div);
-
-                                let clone = div.cloneNode(true)
-                                let buttons = clone.querySelectorAll('.buttons');
-
-                                for (button of buttons) {
-                                    button.parentNode.removeChild(button)
-                                }
-
-                                const modal = document.getElementById('modal');
-                                const modalContent = document.getElementById("modal-content")
-
-                                div.addEventListener("click", () => {
-                                        modalContent.innerHTML = ""
-                                        modalContent.append(clone)
-                                        modal.style.display = 'block';
-                                })
-
-                                window.onclick = function(event) {
-                                    if (event.target == modal) {
-                                        modal.style.display = 'none';
-                                    }
-                                }
+                                div.prepend(edit);
+                                div.prepend(close);
                             }
                             else {
                                 div.classList.add("sketch-posts-public");
 
                                 const post = document.createElement('h2');
-                                post.innerHTML = button["title"];
+                                post.innerHTML = item["title"];
                                 post.classList.add("post-title");
 
                                 const content = document.createElement("div");
-                                content.innerHTML = button["content"];
+                                content.innerHTML = item["content"];
                                 content.classList.add("post-text");
 
                                 div.append(post);
@@ -200,11 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 posts.append(div);
 
                                 let clone = div.cloneNode(true)
-                                let buttons = clone.querySelectorAll('.buttons');
-
-                                for (button of buttons) {
-                                    button.parentNode.removeChild(button)
-                                }
 
                                 const modal = document.getElementById('modal');
                                 const modalContent = document.getElementById("modal-content")
