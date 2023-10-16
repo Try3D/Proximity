@@ -58,9 +58,25 @@ document.addEventListener("DOMContentLoaded", () => {
                         div.classList.add("sketch-border");
                         div.classList.add("sketch-posts-system");
 
-
                         div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>';
                         posts.append(div);
+
+                        let clone = div.cloneNode(true)
+
+                        const modal = document.getElementById('modal');
+                        const modalContent = document.getElementById("modal-content")
+
+                        div.addEventListener("click", () => {
+                            modalContent.innerHTML = ""
+                            modalContent.append(clone)
+                            modal.style.display = 'block';
+                        })
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
                     }
                     else {
                         for (let item of data) {
@@ -71,11 +87,41 @@ document.addEventListener("DOMContentLoaded", () => {
                             if (objects.includes(item["id"])) {
                                 div.classList.add("sketch-posts-user");
 
+                                const post = document.createElement('h2');
+                                post.innerHTML = item["title"];
+                                post.classList.add("post-title");
+
+                                const content = document.createElement("div");
+                                content.innerHTML = item["content"];
+                                content.classList.add("post-text");
+
+                                div.append(post);
+                                div.append(content);
+                                posts.append(div);
+
+                                let clone = div.cloneNode(true)
+
+                                const modal = document.getElementById('modal');
+                                const modalContent = document.getElementById("modal-content")
+
+                                div.addEventListener("click", () => {
+                                        modalContent.innerHTML = ""
+                                        modalContent.append(clone)
+                                        modal.style.display = 'block';
+                                })
+
+                                window.onclick = function(event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
+                                }
+
                                 const edit = document.createElement("button");
                                 edit.innerHTML = "<img src='/static/icons/edit.svg' alt='delete' width=17>";
                                 edit.classList.add("buttons")
 
-                                edit.addEventListener("click", () => {
+                                edit.addEventListener("click", event => {
+                                    event.stopPropagation();
                                     fetch("/getPost/" + item["id"], {
                                         method: "GET",
                                     })
@@ -104,8 +150,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                                     })
                                                 })
                                                     .then(() => {
-                                                        document.querySelector("#textbox").value = "";
-                                                        document.querySelector("#textarea").value = "";
+                                                        title.value = "";
+                                                        content.value = "";
 
                                                         button.removeEventListener("click", updateButton);
                                                         button.addEventListener("click", clickButton);
@@ -121,7 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 close.innerHTML = "<img src='/static/icons/close.svg' alt='delete' width=17>";
                                 close.classList.add("buttons");
 
-                                close.addEventListener("click", () => {
+                                close.addEventListener("click", event => {
+                                    event.stopPropagation();
                                     fetch("/deletePost/" + item["id"], {
                                         method: "DELETE",
                                     })
@@ -129,25 +176,41 @@ document.addEventListener("DOMContentLoaded", () => {
                                             updatePosts();
                                         })
                                 })
-
-                                div.append(close);
-                                div.append(edit);
+                                div.prepend(edit);
+                                div.prepend(close);
                             }
                             else {
                                 div.classList.add("sketch-posts-public");
+
+                                const post = document.createElement('h2');
+                                post.innerHTML = item["title"];
+                                post.classList.add("post-title");
+
+                                const content = document.createElement("div");
+                                content.innerHTML = item["content"];
+                                content.classList.add("post-text");
+
+                                div.append(post);
+                                div.append(content);
+                                posts.append(div);
+
+                                let clone = div.cloneNode(true)
+
+                                const modal = document.getElementById('modal');
+                                const modalContent = document.getElementById("modal-content")
+
+                                div.addEventListener("click", () => {
+                                        modalContent.innerHTML = ""
+                                        modalContent.append(clone)
+                                        modal.style.display = 'block';
+                                })
+
+                                window.onclick = function(event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = 'none';
+                                    }
+                                }
                             }
-
-                            const post = document.createElement('h2');
-                            post.innerHTML = item["title"];
-                            post.classList.add("post-title");
-
-                            const content = document.createElement("div");
-                            content.innerHTML = item["content"];
-                            content.classList.add("post-text");
-
-                            div.append(post);
-                            div.append(content);
-                            posts.append(div);
                         }
                     }
                 });

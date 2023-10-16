@@ -3,6 +3,24 @@
     src: url("../fonts/Itim-Regular.ttf");
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    margin: 10% auto;
+    width: 90%;
+}
+
 .sketch-background {
     font-family: "Itim";
     background-color: #fdf7f2;
@@ -76,6 +94,7 @@
 
 
 .sketch-posts-public, .sketch-posts-user, .sketch-posts-system {
+    cursor: pointer;
     background-clip: padding-box;
     margin-bottom: 10px;
     word-break: break-word;
@@ -108,6 +127,7 @@
 }
 
 .buttons {
+    z-index: 2;
     margin: 4px;
     background-color: transparent;
     border: transparent;
