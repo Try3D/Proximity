@@ -35,7 +35,7 @@ def create_post():
 
     post = cur.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
     for p in post:
-        return {"message": "Post created", "id": f"{p['id']}"}
+        return {"message": "Post created", "id": p['id']}
 
 
 
@@ -49,7 +49,7 @@ def get_posts():
         posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
     except sqlite3.OperationalError:
         cur.execute("CREATE TABLE posts(id INTEGER PRIMARY KEY, title TEXT, content TEXT, latitude REAL, longitude REAL)")
-        posts = cur.execute("SELECT * FROM posts ORDER BY id DESC")
+        return []
 
     a = []
     for post in posts:
@@ -87,14 +87,12 @@ def update_post(id):
 
     if n:
         up = request.get_json()
-
         content = up["content"]
         title = up["title"]
 
         cur = con.cursor()
         cur.execute("UPDATE posts SET title = ? WHERE id = ?", [title, id])
         cur.execute("UPDATE posts SET content = ? WHERE id = ?", [content, id])
-
         con.commit()
         return {"message": "Post updated"}
     else:
