@@ -61,14 +61,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         div.innerHTML = '<h2 class="post-text">There are no posts near you</h2><div class="post-text">Be the first to post something for others to see</div>';
                         posts.append(div);
+
+                        let clone = div.cloneNode(true)
+
+                        const modal = document.getElementById('modal');
+                        const modalContent = document.getElementById("modal-content")
+
+                        div.addEventListener("click", () => {
+                            modalContent.innerHTML = ""
+                            modalContent.append(clone)
+                            modal.style.display = 'block';
+                        })
+
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
                     }
                     else {
-                        for (let item of data) {
+                        for (let button of data) {
                             const objects = JSON.parse(localStorage.getItem("userId"));
                             const div = document.createElement("div");
                             div.classList.add("sketch-border");
 
-                            if (objects.includes(item["id"])) {
+                            if (objects.includes(button["id"])) {
                                 div.classList.add("sketch-posts-user");
 
                                 const edit = document.createElement("button");
@@ -76,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 edit.classList.add("buttons")
 
                                 edit.addEventListener("click", () => {
-                                    fetch("/getPost/" + item["id"], {
+                                    fetch("/getPost/" + button["id"], {
                                         method: "GET",
                                     })
                                         .then(res => res.json())
@@ -93,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                             button.addEventListener("click", updateButton);
 
                                             function updateButton() {
-                                                fetch("/updatePost/" + item["id"], {
+                                                fetch("/updatePost/" + button["id"], {
                                                     method: "PUT",
                                                     headers: {
                                                         "Content-Type": 'application/json',
@@ -122,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 close.classList.add("buttons");
 
                                 close.addEventListener("click", () => {
-                                    fetch("/deletePost/" + item["id"], {
+                                    fetch("/deletePost/" + button["id"], {
                                         method: "DELETE",
                                     })
                                         .then(() => {
@@ -138,16 +155,38 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
 
                             const post = document.createElement('h2');
-                            post.innerHTML = item["title"];
+                            post.innerHTML = button["title"];
                             post.classList.add("post-title");
 
                             const content = document.createElement("div");
-                            content.innerHTML = item["content"];
+                            content.innerHTML = button["content"];
                             content.classList.add("post-text");
 
                             div.append(post);
                             div.append(content);
                             posts.append(div);
+
+                            let clone = div.cloneNode(true)
+                            let buttons = clone.querySelectorAll('.buttons');
+
+                            for (button of buttons) {
+                                button.parentNode.removeChild(button)
+                            }
+
+                            const modal = document.getElementById('modal');
+                            const modalContent = document.getElementById("modal-content")
+
+                            div.addEventListener("click", () => {
+                                    modalContent.innerHTML = ""
+                                    modalContent.append(clone)
+                                    modal.style.display = 'block';
+                            })
+
+                            window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = 'none';
+                                }
+                            }
                         }
                     }
                 });
