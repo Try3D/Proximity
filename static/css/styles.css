@@ -3,10 +3,9 @@
     src: url("../fonts/Itim-Regular.ttf");
 }
 
-.modal {
+.popup {
     display: none;
     position: fixed;
-    z-index: 1;
     left: 0;
     right: 0;
     top: 0;
@@ -16,9 +15,9 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.modal-content {
+.popup-content {
     margin: 10% auto;
-    width: 90%;
+    width: 85%;
 }
 
 .sketch-background {
@@ -37,7 +36,7 @@
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
-    margin-bottom: 0px;
+    margin-bottom: -5px;
     font-weight: bold;
     cursor: pointer;
     font-family: "Itim";
@@ -48,13 +47,12 @@
     background-clip: padding-box;
 }
 
-.sketch-button, .sketch-textbox, .sketch-textarea, .sketch-button-click {
+.sketch-button, .sketch-textbox, .sketch-textarea {
     box-sizing: border-box;
     font-family: "Itim";
     font-weight: bold;
     background-color: #ffffff;
     background-clip: padding-box;
-    border-style: solid;
     outline: none;
 }
 
@@ -64,6 +62,7 @@
     font-size: 1em;
     text-align: center;
     border-image: url(../icons/button.svg) 10 10 10 10 stretch stretch;
+    float: right;
 }
 
 .sketch-textbox {
@@ -73,7 +72,6 @@
 
 .sketch-textarea {
     width: 100%;
-    box-sizing: border-box;
     border-image: url(../icons/textarea.svg) 10 10 10 10 stretch stretch;
     overflow: hidden;
     resize: none;
@@ -85,20 +83,18 @@
 }
 
 .post-title {
-    font-size: 1.7em;
+    font-size: 1.8em;
 }
 
 .post-text {
     font-size: 1.3em;
 }
 
-
 .sketch-posts-public, .sketch-posts-user, .sketch-posts-system {
     cursor: pointer;
     background-clip: padding-box;
     margin-bottom: 10px;
     word-break: break-word;
-    white-space: pre-wrap;
 }
 
 .sketch-posts-public {
@@ -119,15 +115,9 @@
 .sketch-anchor {
     text-align: center;
     text-decoration: none;
-    color: #2c2c2c;
-}
-
-.align-right {
-    float: right;
 }
 
 .buttons {
-    z-index: 2;
     margin: 4px;
     background-color: transparent;
     border: transparent;
@@ -163,7 +153,7 @@
     .right-item {
         flex-basis: 60%;
         overflow-y: scroll;
-        height: calc(100vh - 122px);
+        height: calc(100vh - 117px);
     }
 }
 

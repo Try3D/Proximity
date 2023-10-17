@@ -36,6 +36,7 @@ def create_post():
     post = cur.execute("SELECT * FROM posts ORDER BY id DESC LIMIT 1")
     for p in post:
         return {"message": "Post created", "id": p['id']}
+    return {"message": "An error has occured"}
 
 
 
@@ -86,9 +87,9 @@ def update_post(id):
         n += 1
 
     if n:
-        up = request.get_json()
-        content = up["content"]
-        title = up["title"]
+        new = request.get_json()
+        content = new["content"]
+        title = new["title"]
 
         cur = con.cursor()
         cur.execute("UPDATE posts SET title = ? WHERE id = ?", [title, id])
@@ -124,10 +125,8 @@ def error_404(error):
 def haversine_distance(lat_1, lon_1, lat_2, lon_2):
     d_lat = (lat_2 - lat_1) * math.pi / 180
     d_lon = (lon_2 - lon_1) * math.pi / 180
-    a = math.sin(d_lat / 2) * math.sin(d_lat / 2) + math.cos(lat_1 * math.pi / 180) * math.cos(lat_2 * math.pi / 180) * math.sin(d_lon / 2) * math.sin(d_lon / 2)
-    b = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    c = 6361 * b
-    return c
+    cal = math.sin(d_lat / 2) * math.sin(d_lat / 2) + math.cos(lat_1 * math.pi / 180) * math.cos(lat_2 * math.pi / 180) * math.sin(d_lon / 2) * math.sin(d_lon / 2)
+    return 12722 * math.atan2(math.sqrt(cal), math.sqrt(1 - cal))
 
 
 if __name__ == "__main__":

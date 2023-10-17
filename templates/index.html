@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <title>Proximity</title>
     <script src="static/js/index.js"></script>
 {% endblock %}
 
@@ -18,14 +17,14 @@
                 <textarea id="textarea" class="sketch-border sketch-textarea" placeholder="What's on your mind?" rows="10" columns="100"></textarea>
             </div>
             <div>
-                <button id="button" class="sketch-border sketch-button align-right">POST</button>
+                <button id="button" class="sketch-border sketch-button">POST</button>
             </div>
         </div>
         <div class="right-item">
             <div id="posts"></div>
         </div>
     </div>
-    <div id="modal" class="modal">
-        <div id="modal-content" class="modal-content"></div>
+    <div id="popup" class="popup">
+        <div id="popup-content" class="popup-content"></div>
     </div>
 {% endblock %}
