@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                                 userId.splice(index, 1);
                                             }
                                             localStorage.setItem("userId", JSON.stringify(userId));
-
                                             updatePosts();
                                         });
                                 });
@@ -147,56 +146,56 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
         }
-    }
 
-    function clickButton() {
-        const title = document.querySelector("#textbox").value;
-        const content = document.querySelector("#textarea").value.replace(/\n/g, "<br>");
+        function clickButton() {
+            const title = document.querySelector("#textbox").value;
+            const content = document.querySelector("#textarea").value.replace(/\n/g, "<br>");
 
-        document.querySelector("#textbox").value = "";
-        document.querySelector("#textarea").value = "";
+            document.querySelector("#textbox").value = "";
+            document.querySelector("#textarea").value = "";
 
-        const postData = {
-            title: title,
-            content: content,
-            latitude: latitude,
-            longitude: longitude,
-        };
+            const postData = {
+                title: title,
+                content: content,
+                latitude: latitude,
+                longitude: longitude,
+            };
 
-        fetch("/createPost", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(postData),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                const userId = JSON.parse(localStorage.getItem("userId"));
-                userId.push(parseInt(data["id"]));
-                localStorage.setItem("userId", JSON.stringify(userId));
-                updatePosts();
+            fetch("/createPost", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postData),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    const userId = JSON.parse(localStorage.getItem("userId"));
+                    userId.push(parseInt(data["id"]));
+                    localStorage.setItem("userId", JSON.stringify(userId));
+                    updatePosts();
+                });
+        }
+
+        function popup(div) {
+            const clone = div.cloneNode(true);
+            clone.style.cursor = "auto"
+
+            const popup = document.querySelector("#popup");
+            const popupContent = document.querySelector("#popup-content");
+
+            div.addEventListener("click", () => {
+                popupContent.innerHTML = "";
+                popupContent.append(clone);
+                popup.style.display = "block";
             });
-    }
 
-    function popup(div) {
-        const clone = div.cloneNode(true);
-        clone.style.cursor = "auto"
-
-        const popup = document.querySelector("#popup");
-        const popupContent = document.querySelector("#popup-content");
-
-        div.addEventListener("click", () => {
-            popupContent.innerHTML = "";
-            popupContent.append(clone);
-            popup.style.display = "block";
-        });
-
-        window.onclick = function (event) {
-            if (event.target == popup) {
-                popup.style.display = "none";
-            }
-        };
+            window.onclick = function (event) {
+                if (event.target == popup) {
+                    popup.style.display = "none";
+                }
+            };
+        }
     }
 
     function error() {
