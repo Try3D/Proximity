@@ -15,5 +15,6 @@ A Social media app which gives you posts based on your location
 
     $ `pip install -r requirements.txt`
 - Run the project
-$ python app.py
+
+    $ `python app.py`
 - Go to `http://localhost:5000` to see the development server
